@@ -3,6 +3,32 @@
 The **Andalusia Pulse sidebar** as a drop-in React component. Add it to any Power Apps Code App and your users get the same navigation they have in the Pulse hub — same modules, same apps, same pinned favorites, same role-based access.
 
 
+## ⚡ Quick setup (1 command)
+
+From your Code App folder (it must already have the Microsoft Dataverse connector):
+
+```bash
+npx github:AmrMousaa/PulseSharedNavigation
+```
+
+This installs the package, reads your app id from `power.config.json`, and wraps `<App />` in `src/main.tsx`:
+
+```tsx
+<PulseShell dataverse={MicrosoftDataverseService} powerAppId="<your appId>">
+  <App />
+</PulseShell>
+```
+
+Run `npm run dev` — the Pulse sidebar is on the left. No CSS import or menu button needed: on wide screens it's docked (your content is shifted right automatically); on small screens it becomes a drawer with a floating menu button.
+
+Don't have the Dataverse connector yet? Add it first:
+
+```bash
+pac code add-data-source -a shared_commondataserviceforapps -c <your-dataverse-connection-id>
+```
+
+---
+
 ## Features
 
 | Feature | Details |
@@ -22,7 +48,9 @@ The **Andalusia Pulse sidebar** as a drop-in React component. Add it to any Powe
 
 ---
 
-## 1. Prerequisites
+## Manual setup (more control)
+
+### 1. Prerequisites
 
 Your app must be a **Power Apps Code App** with the **Microsoft Dataverse** connector added (the sidebar reads Pulse data cross-environment through it):
 
@@ -34,20 +62,19 @@ This generates `src/generated/services/MicrosoftDataverseService.ts` in your app
 
 Users need read access to the Pulse tables in the Pulse environment (`https://org1cb63e1b.crm4.dynamics.com`) — the same access they already have for the Pulse hub.
 
-## 2. Install
+### 2. Install
 
 ```bash
 npm install github:AmrMousaa/PulseSharedNavigation
 ```
 
-Pin a version with a tag: `npm install github:AmrMousaa/PulseSharedNavigation#v1.0.0`.
+Pin a version with a tag: `npm install github:AmrMousaa/PulseSharedNavigation#v1.1.0`.
 
-## 3. Use it
+### 3. Use it
 
 ```tsx
 import { useState } from 'react';
 import { PulseNavigation, PulseMenuButton, createDataverseClient } from 'pulse-shared-navigation';
-import 'pulse-shared-navigation/styles.css';
 import { MicrosoftDataverseService } from './generated/services/MicrosoftDataverseService';
 
 // Create once, outside the component.
@@ -90,6 +117,11 @@ On screens ≥ 1024px the sidebar is always visible; below that it becomes the s
 
 ## API
 
+### `<PulseShell />` — zero-config wrapper
+
+Everything below plus: `dataverse` (your generated `MicrosoftDataverseService`, or pass `client`), `powerAppId` (highlights your app by matching its Pulse URL), `showMenuButton` (default `true`), `children`. Defaults to `variant="docked"`.
+
+
 ### `<PulseNavigation />` — connected, recommended
 
 | Prop | Type | Default | Description |
@@ -99,6 +131,7 @@ On screens ≥ 1024px the sidebar is always visible; below that it becomes the s
 | `onClose` | `() => void` | **required** | Called on backdrop click, Esc, close button, or after launching an app. |
 | `variant` | `'overlay' \| 'docked'` | `'overlay'` | Layout mode. |
 | `currentAppId` | `string` | – | `pulse_appid` of the host app; auto-expands and highlights it. |
+| `powerAppId` | `string` | – | Alternative to `currentAppId`: your `power.config.json` `appId`, matched against Pulse app URLs. |
 | `currentModuleId` | `string` | – | Force which module shows the accent bar. |
 | `homeUrl` | `string \| null` | Pulse hub URL | Where the logo navigates. `null` disables it. |
 | `onGoHome` | `() => void` | – | Custom logo click (overrides `homeUrl`). |
@@ -138,6 +171,8 @@ Build your own UI on top of the data layer. Returns `{ status, error, modules, u
 ---
 
 ## Theming
+
+Styles are injected automatically. (`import 'pulse-shared-navigation/styles.css'` still works if you prefer a real stylesheet.)
 
 Override any variable on `.psn-root` (sidebar), `.psn-menu-btn` or `.psn-toast`:
 

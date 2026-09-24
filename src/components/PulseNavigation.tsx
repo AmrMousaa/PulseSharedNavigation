@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { injectStyles } from '../utils/injectStyles';
 import { usePulseNavigation, type UsePulseNavigationOptions } from '../usePulseNavigation';
 import type { NavApp, NavModule } from '../types';
 import { PulseSidebar, type PulseSidebarProps } from './PulseSidebar';
@@ -30,6 +31,11 @@ export interface PulseNavigationProps
   disableFavorites?: boolean;
   /** Receive favorite errors (e.g. "max 5 favorites"). Defaults to a small built-in toast. */
   onError?: (message: string) => void;
+  /**
+   * This app's Power Apps app id (the `appId` in power.config.json). The Pulse
+   * app whose URL contains it is highlighted — an alternative to `currentAppId`.
+   */
+  powerAppId?: string;
 }
 
 /**
@@ -47,9 +53,22 @@ export function PulseNavigation({
   disableFavorites,
   onError,
   userName,
+  powerAppId,
+  currentAppId,
   ...sidebarProps
 }: PulseNavigationProps) {
+  injectStyles();
   const nav = usePulseNavigation({ client, getUserContext, maxFavorites, trackUsage });
+
+  const detectedAppId = useMemo(() => {
+    if (currentAppId || !powerAppId) return currentAppId;
+    const needle = powerAppId.toLowerCase();
+    for (const module of nav.modules) {
+      const match = module.apps.find((app) => app.url?.toLowerCase().includes(needle));
+      if (match) return match.id;
+    }
+    return undefined;
+  }, [currentAppId, powerAppId, nav.modules]);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
@@ -66,6 +85,7 @@ export function PulseNavigation({
     <>
       <PulseSidebar
         {...sidebarProps}
+        currentAppId={detectedAppId}
         modules={nav.modules}
         status={nav.status}
         error={nav.error}

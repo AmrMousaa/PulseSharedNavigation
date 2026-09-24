@@ -1,3 +1,4 @@
+export { PulseShell } from './components/PulseShell';
 export { PulseNavigation, PULSE_HUB_URL } from './components/PulseNavigation';
 export { PulseSidebar } from './components/PulseSidebar';
 export { PulseMenuButton } from './components/PulseMenuButton';

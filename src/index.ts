@@ -1,3 +1,4 @@
+export { PulseShell, type PulseShellProps } from './components/PulseShell';
 export { PulseNavigation, PULSE_HUB_URL, type PulseNavigationProps } from './components/PulseNavigation';
 export { PulseSidebar, type PulseSidebarProps } from './components/PulseSidebar';
 export { PulseMenuButton } from './components/PulseMenuButton';

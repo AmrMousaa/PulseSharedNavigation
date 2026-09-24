@@ -14,9 +14,14 @@ export interface PulseNavigationProps extends UsePulseNavigationOptions, Omit<Pu
     disableFavorites?: boolean;
     /** Receive favorite errors (e.g. "max 5 favorites"). Defaults to a small built-in toast. */
     onError?: (message: string) => void;
+    /**
+     * This app's Power Apps app id (the `appId` in power.config.json). The Pulse
+     * app whose URL contains it is highlighted — an alternative to `currentAppId`.
+     */
+    powerAppId?: string;
 }
 /**
  * Drop-in Pulse sidebar: loads the signed-in user's modules/apps/favorites
  * from the Pulse Dataverse environment and renders `PulseSidebar`.
  */
-export declare function PulseNavigation({ client, getUserContext, maxFavorites, trackUsage, homeUrl, onGoHome, onLaunchApp, disableFavorites, onError, userName, ...sidebarProps }: PulseNavigationProps): import("react").JSX.Element;
+export declare function PulseNavigation({ client, getUserContext, maxFavorites, trackUsage, homeUrl, onGoHome, onLaunchApp, disableFavorites, onError, userName, powerAppId, currentAppId, ...sidebarProps }: PulseNavigationProps): import("react").JSX.Element;

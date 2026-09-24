@@ -1,6 +1,7 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useMemo, useState } from 'react';
 import { initials } from '../utils/launch';
+import { injectStyles } from '../utils/injectStyles';
 import { ModuleIcon } from './ModuleIcon';
 import { IconChevronLeft, IconChevronRight, IconLayers, IconSearch, IconStar } from './icons';
 function highlight(text, query) {
@@ -20,6 +21,7 @@ function onActivateKey(action) {
     };
 }
 export function PulseSidebar({ modules, isOpen, onClose, variant = 'overlay', onLaunchApp, onGoHome, currentModuleId, currentAppId, favoritedAppIds, pendingAppIds, onToggleFavorite, status = 'ready', error, onRetry, brandName = 'Andalusia Pulse', brandTagline = 'ENTERPRISE HUB', logo, userName, userSubtitle = 'Enterprise workspace', footer, searchPlaceholder = 'Search modules or apps', className, }) {
+    injectStyles();
     const activeModuleId = useMemo(() => currentModuleId ?? modules.find((m) => m.apps.some((a) => a.id === currentAppId))?.id ?? null, [modules, currentModuleId, currentAppId]);
     const [expandedId, setExpandedId] = useState(null);
     const [hasUserToggled, setHasUserToggled] = useState(false);

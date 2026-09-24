@@ -598,6 +598,31 @@
   cursor: pointer;
 }
 
+/* Floating menu button used by <PulseShell>. */
+.psn-floating-menu {
+  position: fixed;
+  left: 12px;
+  bottom: 16px;
+  z-index: calc(var(--psn-z) - 6);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(165deg, #064642, #023635);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(2, 54, 53, 0.3);
+}
+
+.psn-floating-menu:hover {
+  color: var(--psn-accent);
+}
+
+@media (min-width: 1024px) {
+  .psn-floating-menu-docked {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .psn-sidebar,
   .psn-backdrop,

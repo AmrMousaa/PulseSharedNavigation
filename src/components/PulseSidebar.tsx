@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type KeyboardEvent, type ReactNode } from 'react';
 import type { NavApp, NavModule } from '../types';
 import { initials } from '../utils/launch';
+import { injectStyles } from '../utils/injectStyles';
 import { ModuleIcon } from './ModuleIcon';
 import { IconChevronLeft, IconChevronRight, IconLayers, IconSearch, IconStar } from './icons';
 
@@ -97,6 +98,7 @@ export function PulseSidebar({
   searchPlaceholder = 'Search modules or apps',
   className,
 }: PulseSidebarProps) {
+  injectStyles();
   const activeModuleId = useMemo(
     () => currentModuleId ?? modules.find((m) => m.apps.some((a) => a.id === currentAppId))?.id ?? null,
     [modules, currentModuleId, currentAppId]
