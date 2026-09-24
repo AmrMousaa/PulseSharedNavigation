@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // One-command setup for Pulse Shared Navigation. Run from a Code App's root:
-//   npx github:AmrMousaa/PulseSharedNavigation
+//   npx --allow-git=all github:AmrMousaa/PulseSharedNavigation
 // It installs the package and wraps <App /> in src/main.tsx with <PulseShell>.
 import { execSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const PACKAGE = 'github:AmrMousaa/PulseSharedNavigation';
+const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+const PACKAGE = `github:AmrMousaa/PulseSharedNavigation#v${version}`;
 const cwd = process.cwd();
 const skipInstall = process.argv.includes('--skip-install');
 
@@ -56,7 +57,7 @@ else
 if (!skipInstall) {
   console.log(`\nInstalling ${PACKAGE} ...`);
   try {
-    execSync(`npm install ${PACKAGE}`, { cwd, stdio: 'inherit' });
+    execSync(`npm install --allow-git=all ${PACKAGE}`, { cwd, stdio: 'inherit' });
   } catch {
     fail('npm install failed. Check you have access to the GitHub repo, then try again.');
   }

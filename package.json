@@ -1,6 +1,6 @@
 {
   "name": "pulse-shared-navigation",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Andalusia Pulse sidebar navigation as a drop-in React component for Power Apps Code Apps.",
   "type": "module",
   "main": "./dist/index.js",

@@ -8,8 +8,10 @@ The **Andalusia Pulse sidebar** as a drop-in React component. Add it to any Powe
 From your Code App folder (it must already have the Microsoft Dataverse connector):
 
 ```bash
-npx github:AmrMousaa/PulseSharedNavigation
+npx --allow-git=all github:AmrMousaa/PulseSharedNavigation
 ```
+
+`--allow-git=all` is needed because npm 12+ blocks installing packages straight from GitHub by default.
 
 This installs the package, reads your app id from `power.config.json`, and wraps `<App />` in `src/main.tsx`:
 
@@ -65,10 +67,10 @@ Users need read access to the Pulse tables in the Pulse environment (`https://or
 ### 2. Install
 
 ```bash
-npm install github:AmrMousaa/PulseSharedNavigation
+npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation
 ```
 
-Pin a version with a tag: `npm install github:AmrMousaa/PulseSharedNavigation#v1.1.0`.
+Pin a version with a tag: `npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation#v1.1.1`.
 
 ### 3. Use it
 
