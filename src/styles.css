@@ -1,0 +1,610 @@
+/* =========================================================================
+   Pulse Shared Navigation — sidebar styles (Synapse / HMIS design system).
+   Every class is prefixed `psn-` so it can't collide with the host app.
+   Override any --psn-* variable on `.psn-root` (or :root) to theme it.
+   ========================================================================= */
+
+.psn-root,
+.psn-menu-btn,
+.psn-toast {
+  --psn-sidebar-w: 272px;
+  --psn-z: 40;
+  --psn-font: 'Urbanist', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --psn-bg: linear-gradient(165deg, #064642 0%, #023635 62%, #03251f 100%);
+  --psn-accent: #40ffb8;
+  --psn-accent-2: #4bb69a;
+  --psn-deep: #023635;
+  --psn-text: #ffffff;
+  --psn-overlay: rgba(3, 17, 15, 0.58);
+  --psn-shadow: 0 30px 70px rgba(76, 73, 105, 0.19), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --psn-radius: 8px;
+  --psn-radius-lg: 12px;
+  --psn-ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --psn-ease-enter: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --psn-ease-exit: cubic-bezier(0.4, 0, 0.7, 0.2);
+  --psn-fast: 180ms;
+  --psn-base: 300ms;
+  --psn-overlay-dur: 560ms;
+  font-family: var(--psn-font);
+}
+
+.psn-root *,
+.psn-root *::before,
+.psn-root *::after {
+  box-sizing: border-box;
+}
+
+/* ---------------- Shell ---------------- */
+.psn-sidebar {
+  width: var(--psn-sidebar-w);
+  max-width: 88vw;
+  background: var(--psn-bg);
+  color: var(--psn-text);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  transform: translateX(-100%);
+  transition: transform var(--psn-overlay-dur) var(--psn-ease-exit), box-shadow var(--psn-overlay-dur) var(--psn-ease-exit);
+  z-index: var(--psn-z);
+  overflow: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.psn-sidebar::before,
+.psn-sidebar::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.psn-sidebar::before {
+  top: -120px;
+  right: -140px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(closest-side, rgba(64, 255, 184, 0.22), transparent);
+}
+
+.psn-sidebar::after {
+  bottom: -140px;
+  left: -100px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(closest-side, rgba(141, 115, 222, 0.12), transparent);
+}
+
+.psn-root.open .psn-sidebar {
+  transform: translateX(0);
+  box-shadow: var(--psn-shadow);
+  transition: transform var(--psn-overlay-dur) var(--psn-ease-settle), box-shadow var(--psn-overlay-dur) var(--psn-ease-settle);
+}
+
+.psn-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--psn-overlay);
+  z-index: calc(var(--psn-z) - 5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--psn-overlay-dur) var(--psn-ease-exit);
+}
+
+.psn-root.open .psn-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity var(--psn-overlay-dur) var(--psn-ease-enter);
+}
+
+/* Docked: always visible on wide screens; the host offsets its content with
+   `padding-left: var(--psn-sidebar-w)` (or the .psn-docked-offset helper). */
+@media (min-width: 1024px) {
+  .psn-docked .psn-sidebar {
+    transform: none;
+    box-shadow: none;
+  }
+  .psn-docked .psn-backdrop,
+  .psn-docked .psn-collapse {
+    display: none;
+  }
+  .psn-docked-offset {
+    padding-left: var(--psn-sidebar-w, 272px);
+  }
+}
+
+.psn-top {
+  height: 3px;
+  background: linear-gradient(90deg, var(--psn-accent), var(--psn-accent-2));
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------- Header ---------------- */
+.psn-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.psn-logo-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.psn-logo-btn:disabled {
+  cursor: default;
+}
+
+.psn-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--psn-radius-lg);
+  background: linear-gradient(150deg, var(--psn-accent), var(--psn-accent-2));
+  color: var(--psn-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(2, 54, 53, 0.35);
+  overflow: hidden;
+}
+
+.psn-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.psn-brand {
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.psn-brand .n {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.psn-brand .s {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.14em;
+  margin-top: 2px;
+}
+
+.psn-collapse {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--psn-radius);
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--psn-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--psn-base) var(--psn-ease-enter);
+}
+
+.psn-collapse:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ---------------- Search ---------------- */
+.psn-search {
+  padding: 16px 16px 10px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.psn-search-in {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--psn-radius-lg);
+  padding: 9px 11px;
+  transition: background var(--psn-fast) var(--psn-ease-enter), border-color var(--psn-fast) var(--psn-ease-enter);
+}
+
+.psn-search-in:focus-within {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--psn-accent);
+}
+
+.psn-search-in svg {
+  color: rgba(255, 255, 255, 0.55);
+  flex-shrink: 0;
+}
+
+.psn-search-in input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--psn-text);
+  font: inherit;
+  font-size: 13px;
+  width: 100%;
+  padding: 0;
+}
+
+.psn-search-in input::placeholder {
+  color: rgba(255, 255, 255, 0.48);
+}
+
+/* ---------------- Nav ---------------- */
+.psn-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 12px 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.psn-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.psn-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+}
+
+.psn-nav mark {
+  background: rgba(64, 255, 184, 0.28);
+  color: inherit;
+  border-radius: 2px;
+}
+
+.psn-item {
+  margin-bottom: 4px;
+}
+
+.psn-row {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 10px 12px;
+  border-radius: var(--psn-radius);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.82);
+  transition: background var(--psn-fast) var(--psn-ease-enter), color var(--psn-fast) var(--psn-ease-enter);
+}
+
+.psn-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--psn-text);
+}
+
+.psn-row.current {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--psn-text);
+}
+
+.psn-row.current::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 4px 4px 0;
+  background: var(--psn-accent);
+}
+
+.psn-item.expanded > .psn-row {
+  background: rgba(64, 255, 184, 0.14);
+  color: var(--psn-text);
+}
+
+.psn-row:focus-visible,
+.psn-app:focus-visible,
+.psn-star:focus-visible,
+.psn-logo-btn:focus-visible,
+.psn-collapse:focus-visible {
+  outline: 2px solid var(--psn-accent);
+  outline-offset: 1px;
+}
+
+.psn-row-icon {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  display: flex;
+  margin-top: 1px;
+}
+
+.psn-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  flex: 1;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+}
+
+.psn-count {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.psn-item.expanded > .psn-row .psn-count {
+  background: rgba(2, 54, 53, 0.35);
+  color: var(--psn-accent);
+}
+
+.psn-chev {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: transform var(--psn-base) var(--psn-ease-enter);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.psn-item.expanded .psn-chev {
+  transform: rotate(90deg);
+  color: var(--psn-accent);
+}
+
+.psn-sub {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--psn-base) var(--psn-ease-enter);
+  padding-left: 14px;
+}
+
+.psn-item.expanded .psn-sub {
+  max-height: 900px;
+}
+
+.psn-app {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 22px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: var(--psn-radius);
+  cursor: pointer;
+  transition: background var(--psn-fast) ease, color var(--psn-fast) ease;
+}
+
+.psn-app:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--psn-text);
+}
+
+.psn-app.current {
+  color: var(--psn-accent);
+}
+
+.psn-app:hover .psn-star {
+  opacity: 1;
+}
+
+.psn-app.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.psn-app-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.psn-star {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.35);
+  border-radius: var(--psn-radius);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: color var(--psn-base) var(--psn-ease-enter), opacity var(--psn-base) var(--psn-ease-enter);
+}
+
+.psn-star:hover,
+.psn-star.pinned {
+  color: var(--psn-accent);
+}
+
+.psn-star.pinned {
+  opacity: 1;
+}
+
+.psn-star.pending {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.psn-empty {
+  padding: 14px 10px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+.psn-retry {
+  display: block;
+  margin: 10px auto 0;
+  padding: 6px 12px;
+  border-radius: var(--psn-radius);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--psn-text);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.psn-retry:hover {
+  border-color: var(--psn-accent);
+}
+
+.psn-skeleton-row {
+  height: 38px;
+  margin-bottom: 6px;
+  border-radius: var(--psn-radius);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05));
+  background-size: 200% 100%;
+  animation: psn-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes psn-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+.psn-icon-mono {
+  display: inline-block;
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* ---------------- Footer ---------------- */
+.psn-footer {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.psn-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, var(--psn-accent), var(--psn-accent-2));
+  color: var(--psn-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.psn-user {
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.psn-user .un {
+  font-size: 12.5px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.psn-user .ur {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ---------------- Menu button & toast ---------------- */
+.psn-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--psn-radius);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color var(--psn-fast) ease, color var(--psn-fast) ease;
+}
+
+.psn-menu-btn:hover {
+  border-color: #82d2ba;
+  color: #126e5c;
+}
+
+.psn-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: calc(var(--psn-z) + 10);
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 10px 16px;
+  border-radius: var(--psn-radius-lg);
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psn-sidebar,
+  .psn-backdrop,
+  .psn-sub,
+  .psn-chev,
+  .psn-skeleton-row {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "pulse-shared-navigation",
+  "version": "1.0.0",
+  "description": "Andalusia Pulse sidebar navigation as a drop-in React component for Power Apps Code Apps.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "node scripts/clean.mjs && tsc -p tsconfig.build.json && node scripts/copy-css.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "vite example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmrMousaa/PulseSharedNavigation.git"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "peerDependencies": {
+    "@microsoft/power-apps": ">=1.0.0",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@microsoft/power-apps": "^1.2.5",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}

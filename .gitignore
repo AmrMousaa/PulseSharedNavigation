@@ -1,0 +1,6 @@
+node_modules
+*.log
+.DS_Store
+.vscode/*
+.idea
+# dist is committed on purpose so `npm install github:...` works without a build step
