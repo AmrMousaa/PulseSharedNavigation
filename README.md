@@ -70,7 +70,7 @@ Users need read access to the Pulse tables in the Pulse environment (`https://or
 npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation
 ```
 
-Pin a version with a tag: `npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation#v1.1.1`.
+Pin a version with a tag: `npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation#v1.1.2`.
 
 ### 3. Use it
 
