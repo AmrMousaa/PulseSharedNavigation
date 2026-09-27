@@ -62,7 +62,7 @@ pac code add-data-source -a shared_commondataserviceforapps -c <your-dataverse-c
 
 This generates `src/generated/services/MicrosoftDataverseService.ts` in your app — you'll pass it to the sidebar.
 
-Users need read access to the Pulse tables in the Pulse environment (`https://org1cb63e1b.crm4.dynamics.com`) — the same access they already have for the Pulse hub.
+Users need read access to the Pulse tables in the Pulse environment (`https://org319b4ea9.crm4.dynamics.com`) — the same access they already have for the Pulse hub.
 
 ### 2. Install
 

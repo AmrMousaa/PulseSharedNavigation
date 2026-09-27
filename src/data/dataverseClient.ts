@@ -1,7 +1,7 @@
 import type { DataverseClient, ListOptions } from '../types';
 
 /** Pulse's Dataverse environment (where modules, apps, favorites and usage live). */
-export const PULSE_ORGANIZATION_URL = 'https://org1cb63e1b.crm4.dynamics.com';
+export const PULSE_ORGANIZATION_URL = 'https://org319b4ea9.crm4.dynamics.com';
 
 interface OperationResult<T> {
   success: boolean;

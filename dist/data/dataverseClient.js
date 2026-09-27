@@ -1,5 +1,5 @@
 /** Pulse's Dataverse environment (where modules, apps, favorites and usage live). */
-export const PULSE_ORGANIZATION_URL = 'https://org1cb63e1b.crm4.dynamics.com';
+export const PULSE_ORGANIZATION_URL = 'https://org319b4ea9.crm4.dynamics.com';
 const PREFER = 'return=representation,odata.include-annotations="*"';
 const ACCEPT = 'application/json';
 function errorMessage(result, fallback) {
