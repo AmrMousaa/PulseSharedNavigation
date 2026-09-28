@@ -1,6 +1,8 @@
 import type { CurrentUserAccess, DataverseClient, UserContext } from '../types';
 
-const SYSTEM_ADMINISTRATOR_ROLE_NAME = 'System Administrator';
+// Pulse Admin is Pulse's full-access role: it sees every app in the catalog.
+// Dataverse's own System Administrator role deliberately grants nothing extra.
+const PULSE_ADMIN_ROLE_NAME = 'Pulse Admin';
 
 // The signed-in user's Dataverse id and role membership never change
 // mid-session, but nearly every data operation needs them. Each lookup is a
@@ -33,7 +35,7 @@ export function getCurrentUserAccess(
       return {
         userId,
         roleIds: new Set(roles.map((role) => role.roleid)),
-        isSystemAdministrator: roles.some((role) => role.name === SYSTEM_ADMINISTRATOR_ROLE_NAME),
+        isPulseAdmin: roles.some((role) => role.name === PULSE_ADMIN_ROLE_NAME),
       };
     })().catch((err) => {
       // Don't cache a failed lookup — let the next call retry.

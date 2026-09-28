@@ -27,7 +27,7 @@ interface PermissionRow {
 }
 
 function canSeeApp(appId: string, requiredRoleIdsByApp: Map<string, Set<string>>, access: CurrentUserAccess): boolean {
-  if (access.isSystemAdministrator) return true;
+  if (access.isPulseAdmin) return true;
   const required = requiredRoleIdsByApp.get(appId);
   // An app with no role linked to it isn't visible to anyone yet — it needs
   // at least one Security Role assigned before it shows up in the catalog.

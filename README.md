@@ -36,12 +36,12 @@ pac code add-data-source -a shared_commondataserviceforapps -c <your-dataverse-c
 | Feature | Details |
 | --- | --- |
 | Modules & apps | Loads active `pulse_modules` / `pulse_apps` from the Pulse Dataverse environment, ordered by `pulse_order`. |
-| Role-based access | Only apps linked (via `pulse_apppermissions`) to one of the user's security roles are shown. System Administrators see everything. Empty modules are hidden. |
+| Role-based access | Only apps linked (via `pulse_apppermissions`) to one of the user's security roles are shown. Users with the **Pulse Admin** role see everything (Dataverse System Administrator grants nothing extra). Empty modules are hidden. |
 | Search | Filters modules **and** apps as you type, with match highlighting. |
 | Accordion | One module expanded at a time; the module of the current app opens automatically. |
 | Current app highlight | Pass `currentAppId` and its module gets the accent bar, the app is highlighted. |
 | Favorites (pins) | Star any app to pin it — synced with the Pulse hub home page (`pulse_favorites`). Max 5, optimistic, race-safe. |
-| App launch | Opens the app with `hidenavbar=true` and records usage for the Pulse analytics dashboard (`pulse_appusagestatses`, `pulse_appuserlastuseds`). |
+| App launch | Opens the app with `hidenavbar=true` (skipped for model-driven `*.dynamics.com` URLs, which reject unknown parameters) and records usage for the Pulse analytics dashboard (`pulse_appusagestatses`, `pulse_appuserlastuseds`). |
 | Disabled apps | Apps without a URL are shown greyed out and can't be launched. |
 | Home | Logo click returns to the Pulse hub (configurable). |
 | Layout modes | `overlay` (slide-in drawer, like Pulse) or `docked` (always visible ≥ 1024px, drawer below). |
@@ -70,7 +70,7 @@ Users need read access to the Pulse tables in the Pulse environment (`https://or
 npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation
 ```
 
-Pin a version with a tag: `npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation#v1.1.2`.
+Pin a version with a tag: `npm install --allow-git=all github:AmrMousaa/PulseSharedNavigation#v1.1.3`.
 
 ### 3. Use it
 

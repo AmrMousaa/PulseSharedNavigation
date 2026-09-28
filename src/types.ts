@@ -46,7 +46,7 @@ export interface UserContext {
 
 export interface CurrentUserAccess {
   userId: string;
-  isSystemAdministrator: boolean;
+  isPulseAdmin: boolean;
   roleIds: Set<string>;
 }
 

@@ -1,7 +1,7 @@
 const ACTIVE_FILTER = 'statecode eq 0';
 const ORDER_BY = ['pulse_order asc'];
 function canSeeApp(appId, requiredRoleIdsByApp, access) {
-    if (access.isSystemAdministrator)
+    if (access.isPulseAdmin)
         return true;
     const required = requiredRoleIdsByApp.get(appId);
     // An app with no role linked to it isn't visible to anyone yet — it needs

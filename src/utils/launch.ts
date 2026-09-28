@@ -1,5 +1,18 @@
-/** Appends `hidenavbar=true` so the launched Power App hides its own chrome. */
+// Model-driven app pages (https://<org>.crm*.dynamics.com/main.aspx) reject any
+// query-string parameter they don't recognise with a generic "An error has
+// occurred" page, so `hidenavbar` must only be added to Power Apps (code/canvas)
+// URLs. Model-driven URLs hide their chrome with their own `navbar=off` param.
+function isModelDrivenUrl(url: string): boolean {
+  try {
+    return new URL(url).hostname.toLowerCase().endsWith('.dynamics.com');
+  } catch {
+    return false;
+  }
+}
+
+/** Appends `hidenavbar=true` so the launched Power App hides its own chrome (model-driven URLs are left as-is). */
 export function withHiddenNavbar(url: string): string {
+  if (isModelDrivenUrl(url)) return url;
   const separator = url.includes('?') ? '&' : '?';
   return `${url}${separator}hidenavbar=true`;
 }
